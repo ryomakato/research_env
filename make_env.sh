@@ -37,11 +37,13 @@ sudo apt install -y openssh-server
 #sudo sed -i -e "s/#Port 22/Port 8080/g" /etc/ssh/sshd_config
 sudo sed -i -e "s/#PermitRootLogin prohibit-password/PermitRootLogin no/g" /etc/ssh/sshd_config
 sudo sed -i -e "s/#PasswordAuthentication yes/PasswordAuthentication no/g" /etc/ssh/sshd_config
-if [[ ! -e ~/.ssh/authorized_keys ]]; then
+if [[ ! -e ~/.ssh ]]; then
     mkdir ~/.ssh
-    sudo chmod 700 ~/.ssh
-    sudo touch ~/.ssh/authorized_keys
-    sudo chmod 600 ~/.ssh/authorized_keys  
+    if [[ ! -e ~/.ssh/authorized_keys ]]; then
+        sudo chmod 700 ~/.ssh
+        sudo touch ~/.ssh/authorized_keys
+        sudo chmod 600 ~/.ssh/authorized_keys  
+    fi
 fi
 sudo service ssh restart
 
