@@ -56,12 +56,12 @@ sudo usermod -aG docker $USER
 # install nvidia-docker if you want
 if [ ${GPU_OPTION:-false} == true ]; then
    # install nvidia-gpu-driver
-    sudo add-apt-repository ppa:graphics-drivers/ppa
+    sudo add-apt-repository -y ppa:graphics-drivers/ppa
     sudo apt update
     apt-cache search nvidia-driver
     sudo apt-get -y install ubuntu-drivers-common
     sudo ubuntu-drivers autoinstall
-    sudo reboot
+    #sudo reboot
     # install nvidia-docker
     curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -
     distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
