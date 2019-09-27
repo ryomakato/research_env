@@ -83,7 +83,8 @@ fi
 sudo apt install -y tmux
 
 # set firewall
-sudo ufw status
+#ls /etc/ufw/applications.d/
+#sudo ufw status
 sudo ufw enable
 sudo ufw allow ssh
 sudo ufw allow samba
