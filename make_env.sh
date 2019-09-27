@@ -82,6 +82,14 @@ fi
 # install tmux
 sudo apt install -y tmux
 
+# set firewall
+sudo ufw status
+sudo ufw enable
+sudo ufw allow ssh
+sudo ufw allow samba
+#sudo ufw allow from IP_ADRESS/24 to any port cups
+sudo ufw reload
+
 # autoremove
 sudo apt autoremove -y
 
