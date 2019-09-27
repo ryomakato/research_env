@@ -39,11 +39,11 @@ sudo sed -i -e "s/#PermitRootLogin prohibit-password/PermitRootLogin no/g" /etc/
 sudo sed -i -e "s/#PasswordAuthentication yes/PasswordAuthentication no/g" /etc/ssh/sshd_config
 if [[ ! -e ~/.ssh ]]; then
     mkdir ~/.ssh
-    if [[ ! -e ~/.ssh/authorized_keys ]]; then
-        sudo chmod 700 ~/.ssh
-        sudo touch ~/.ssh/authorized_keys
-        sudo chmod 600 ~/.ssh/authorized_keys  
-    fi
+fi
+if [[ ! -e ~/.ssh/authorized_keys ]]; then
+    sudo chmod 700 ~/.ssh
+    sudo touch ~/.ssh/authorized_keys
+    sudo chmod 600 ~/.ssh/authorized_keys
 fi
 sudo service ssh restart
 
