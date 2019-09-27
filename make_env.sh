@@ -50,6 +50,7 @@ sudo service ssh restart
 # configuration for static ip
 
 # install samba
+sudo apt install -y samba
 
 # install docker
 sudo apt-get update
