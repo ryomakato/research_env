@@ -81,7 +81,7 @@ sudo service ssh restart
 sudo apt install -y tmux
 
 # install samba
-sudo docker pull dperson/sambaa
+sudo docker pull dperson/samba
 sudo mkdir /srv/samba
 sudo chown 100 /srv/samba
 
