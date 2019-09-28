@@ -32,25 +32,7 @@ done
 CURRENT_DIRECTORY=$PWD
 sudo apt update && sudo apt upgrade -y
 
-# install openssh-server
-sudo apt install -y openssh-server
-#sudo sed -i -e "s/#Port 22/Port 8080/g" /etc/ssh/sshd_config
-sudo sed -i -e "s/#PermitRootLogin prohibit-password/PermitRootLogin no/g" /etc/ssh/sshd_config
-sudo sed -i -e "s/#PasswordAuthentication yes/PasswordAuthentication no/g" /etc/ssh/sshd_config
-if [[ ! -e ~/.ssh ]]; then
-    mkdir ~/.ssh
-fi
-if [[ ! -e ~/.ssh/authorized_keys ]]; then
-    sudo chmod 700 ~/.ssh
-    sudo touch ~/.ssh/authorized_keys
-    sudo chmod 600 ~/.ssh/authorized_keys
-fi
-sudo service ssh restart
-
 # configuration for static ip
-
-# install samba
-sudo apt install -y samba
 
 # install docker
 sudo apt-get update
@@ -60,7 +42,7 @@ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubun
 sudo apt-get update
 sudo apt-get install -y docker-ce
 sudo usermod -aG docker $USER
-
+sudo service docker start
 
 # install nvidia-docker if you want
 if [ ${GPU_OPTION:-false} == true ]; then
@@ -80,8 +62,32 @@ if [ ${GPU_OPTION:-false} == true ]; then
     sudo pkill -SIGHUP dockerd
 fi
 
+# install openssh-server
+sudo apt install -y openssh-server
+#sudo sed -i -e "s/#Port 22/Port 8080/g" /etc/ssh/sshd_config
+sudo sed -i -e "s/#PermitRootLogin prohibit-password/PermitRootLogin no/g" /etc/ssh/sshd_config
+sudo sed -i -e "s/#PasswordAuthentication yes/PasswordAuthentication no/g" /etc/ssh/sshd_config
+if [[ ! -e ~/.ssh ]]; then
+    mkdir ~/.ssh
+fi
+if [[ ! -e ~/.ssh/authorized_keys ]]; then
+    sudo chmod 700 ~/.ssh
+    sudo touch ~/.ssh/authorized_keys
+    sudo chmod 600 ~/.ssh/authorized_keys
+fi
+sudo service ssh restart
+
 # install tmux
 sudo apt install -y tmux
+
+# install samba
+sudo docker pull dperson/sambaa
+sudo mkdir /srv/samba
+sudo chown 100 /srv/samba
+
+# install nextcloud
+sudo docker pull nextcloud
+sudo mkdir /srv/nextcloud
 
 # set firewall
 #ls /etc/ufw/applications.d/
