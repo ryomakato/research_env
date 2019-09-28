@@ -94,8 +94,9 @@ sudo mkdir /srv/nextcloud
 #sudo ufw status
 sudo ufw enable
 sudo ufw allow ssh
-sudo ufw allow samba
-#sudo ufw allow from IP_ADRESS/24 to any port cups
+sudo ufw allow 139 # for samba
+sudo ufw allow 445 # for samba
+#sudo ufw allow cups # for printer in lan
 sudo ufw reload
 
 # autoremove
