@@ -84,7 +84,7 @@ sudo apt install -y tmux
 sudo docker pull dperson/samba
 sudo mkdir /srv/samba
 sudo chown 100 /srv/samba
-sudo docker run --restart=always --name samba -p 139:139 -p 445:445 -v /srv/samba:/pub -d dperson/samba -p -u "user;user" -s "pub;/pub;yes;no;no,user"
+sudo docker run --restart=always --name samba -p 139:139 -p 445:445 -v /srv/samba:/pub -d dperson/samba -p -u "user;user" -s "pub;/pub;yes;no;no;user"
 
 # install nextcloud
 sudo docker pull nextcloud
