@@ -84,10 +84,12 @@ sudo apt install -y tmux
 sudo docker pull dperson/samba
 sudo mkdir /srv/samba
 sudo chown 100 /srv/samba
+sudo docker run -it --name samba -p 139:139 -p 445:445 -v /srv/samba:/pub -d dperson/samba -p
 
 # install nextcloud
 sudo docker pull nextcloud
 sudo mkdir /srv/nextcloud
+sudo docker run --restart=always --name nextcloud -p 80:80 -v /srv/nextcloud:/var/www/html -d nextcloud
 
 # set firewall
 #ls /etc/ufw/applications.d/
@@ -96,6 +98,7 @@ sudo ufw enable
 sudo ufw allow ssh
 sudo ufw allow 139 # for samba
 sudo ufw allow 445 # for samba
+sudo ufw allow 80  # for nextvloud
 #sudo ufw allow cups # for printer in lan
 sudo ufw reload
 
