@@ -86,10 +86,12 @@ sudo mkdir /srv/samba
 sudo chown 100 /srv/samba
 sudo docker run --restart=always --name samba -p 139:139 -p 445:445 -v /srv/samba:/pub -d dperson/samba -p -u "user;user" -s "pub;/pub;yes;no;no;user"
 
+<< COMMENTOUT
 # install nextcloud
 sudo docker pull nextcloud
 sudo mkdir /srv/nextcloud
 sudo docker run --restart=always --name nextcloud -p 80:80 -v /srv/nextcloud:/var/www/html -d nextcloud
+COMMENTOUT
 
 # set firewall
 #ls /etc/ufw/applications.d/
