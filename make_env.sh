@@ -90,7 +90,7 @@ sudo apt install -y tmux
 sudo docker pull dperson/samba
 sudo mkdir /srv
 sudo chown 100 /srv
-sudo docker run --restart=always --name samba -p 139:139 -p 445:445 -v /srv:/pub -d dperson/samba -p -u "$USER;$SAMBAPWD" -s "pub;/pub;yes;no;no;$USER"
+sudo docker run --restart=always --name samba -p 139:139 -p 445:445 -v /srv:/srv -d dperson/samba -p -u "$USER;$SAMBAPWD" -s "srv;/srv;yes;no;no;$USER"
 
 << COMMENTOUT
 # install samba
