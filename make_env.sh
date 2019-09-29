@@ -136,7 +136,6 @@ if [ ${APPS_OPTION:-false} == true ]; then
 
     # add to favorites
     gsettings set org.gnome.shell favorite-apps "['google-chrome.desktop', 'code.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Software.desktop', 'yelp.desktop']"
-
 fi
 
 # autoremove
