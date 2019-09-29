@@ -29,9 +29,9 @@ for opt in "$@"; do
 done
 
 # create samba account
-echo "create a samba account"
+echo "Create a samba account:"
 echo "new user: $USER"
-read -p "new password: " SAMBAPWD
+read -sp "new password: " SAMBAPWD
 
 # update && upgrade
 CURRENT_DIRECTORY=$PWD
@@ -108,6 +108,23 @@ sudo ufw allow 445 # for samba
 sudo ufw allow 80  # for nextvloud
 #sudo ufw allow cups # for printer in lan
 sudo ufw reload
+
+# install chrome
+curl https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' | sudo tee /etc/apt/sources.list.d/google-chrome.list
+sudo apt update
+sudo apt install -y google-chrome-stable
+
+# install visual studio code
+curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
+sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+sudo apt install -y apt-transport-https
+sudo apt update
+sudo apt install code
+
+# install libreoffice
+sudo snap install libreoffice
 
 # autoremove
 sudo apt autoremove -y
