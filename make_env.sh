@@ -5,13 +5,14 @@ PROGNAME="$( basename $0 )"
 # usage
 function usage() {
   cat << EOS >&2
-Usage: ${PROGNAME} [--cpu] [--gpu]
+Usage: ${PROGNAME} [--cpu] [--gpu] [--apps]
   Make research enviroment on Ubuntu18.04.
 
 Options:
   --cpu        Normal Installation.
   --gpu        Install Nvidiadocker.
-  -h, --help    Show usage.
+  --apps       Install Chrome, VSC, and Libreoffice.
+  -h, --help   Show usage.
 EOS
   exit 1
 }
@@ -22,22 +23,12 @@ for opt in "$@"; do
     case "${opt}" in
         '--cpu') CPU_OPTION=true; shift;;
         '--gpu') GPU_OPTION=true; shift;;
+	'--apps') APPS_OPTION=true; shift;;
         '-h' | '--help') usage;;
         '--' | '-') shift; PARAM+=("$@"); break;;
         -* | *) echo "${PROGNAME}: illegal option -- '$( echo $1 | sed 's/^-*//' )'" 1>&2; exit 1;;
     esac
 done
-
-# add to favorites function
-function add_to_favorites () {
-    application="'${1}.desktop'"
-    favourites="/org/gnome/shell/favorite-apps"
-    dconf write ${favourites} \
-      "$(dconf read ${favourites} \
-      | sed "s/, ${application}//g" \
-      | sed "s/${application}//g" \
-      | sed -e "s/]$/, ${application}]/")"
-}
 
 # create samba account
 echo "Create a samba account:"
@@ -120,24 +111,29 @@ sudo ufw allow 80  # for nextvloud
 #sudo ufw allow cups # for printer in lan
 sudo ufw reload
 
-# install chrome
-curl https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' | sudo tee /etc/apt/sources.list.d/google-chrome.list
-sudo apt update
-sudo apt install -y google-chrome-stable
-add_to_favorites google-chrome-stable
+# if apps option is ture:
+if [ ${APPS_OPTION:-false} == true ]; then
+    # install chrome
+    curl https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+    echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' | sudo tee /etc/apt/sources.list.d/google-chrome.list
+    sudo apt update
+    sudo apt install -y google-chrome-stable
 
-# install visual studio code
-curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
-sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
-sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
-sudo apt install -y apt-transport-https
-sudo apt update
-sudo apt install code
-add_to_favorites code
+    # install visual studio code
+    curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+    sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
+    sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+    sudo apt install -y apt-transport-https
+    sudo apt update
+    sudo apt install code
 
-# install libreoffice
-sudo snap install libreoffice
+    # install libreoffice
+    sudo snap install libreoffice
+
+    # add to favorites
+    gsettings set org.gnome.shell favorite-apps "['google-chrome.desktop', 'code.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Software.desktop', 'yelp.desktop']"
+
+fi
 
 # autoremove
 sudo apt autoremove -y
