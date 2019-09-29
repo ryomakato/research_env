@@ -36,7 +36,6 @@ echo "new user: $USER"
 read -sp "new password: " SAMBAPWD
 
 # update && upgrade
-CURRENT_DIRECTORY=$PWD
 sudo apt update && sudo apt upgrade -y
 
 # configuration for static ip
