@@ -28,6 +28,17 @@ for opt in "$@"; do
     esac
 done
 
+# add to favorites function
+function add_to_favorites () {
+    application="'${1}.desktop'"
+    favourites="/org/gnome/shell/favorite-apps"
+    dconf write ${favourites} \
+      "$(dconf read ${favourites} \
+      | sed "s/, ${application}//g" \
+      | sed "s/${application}//g" \
+      | sed -e "s/]$/, ${application}]/")"
+}
+
 # create samba account
 echo "Create a samba account:"
 echo "new user: $USER"
@@ -114,6 +125,7 @@ curl https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
 echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' | sudo tee /etc/apt/sources.list.d/google-chrome.list
 sudo apt update
 sudo apt install -y google-chrome-stable
+add_to_favorites google-chrome-stable
 
 # install visual studio code
 curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
@@ -122,6 +134,7 @@ sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode s
 sudo apt install -y apt-transport-https
 sudo apt update
 sudo apt install code
+add_to_favorites code
 
 # install libreoffice
 sudo snap install libreoffice
