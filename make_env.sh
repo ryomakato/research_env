@@ -97,7 +97,7 @@ sudo docker run --restart=always --name samba -p 139:139 -p 445:445 -v /srv:/srv
 sudo docker pull dperson/samba
 sudo mkdir /srv/samba
 sudo chown 100 /srv/samba
-sudo docker run --restart=always --name samba -p 139:139 -p 445:445 -v /srv/samba:/pub -d dperson/samba -p -u "$USER;$SAMBAPWD" -s "pub;/pub;yes;no;no;$USER"
+sudo docker run --restart=always --name samba -p 139:139 -p 445:445 -v /srv/samba:/srv -d dperson/samba -p -u "$USER;$SAMBAPWD" -s "srv;/srv;yes;no;no;$USER"
 # install nextcloud
 sudo docker pull nextcloud
 sudo mkdir /srv/nextcloud
