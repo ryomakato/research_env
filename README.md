@@ -38,6 +38,10 @@ Then, build and run tensorflow env. with docker
 $ sudo docker build -t tensorflow .
 $ bash run_docker.sh
 ```
+## 5. Conect with Samba
+```bash
+smb://IP_ADDRESS
+```
 ### TODO
 - Static IP (bb router and ubuntu config.)
 - Grobal IP (ddclient)
