@@ -43,3 +43,5 @@ $ bash run_docker.sh
 - Grobal IP (ddclient)
 - wakeonlan
 - samba mount place
+- docker build detail with requirements.txt
+- Nextcloud?
